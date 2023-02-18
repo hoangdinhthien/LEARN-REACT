@@ -1,0 +1,10 @@
+<div id="root"></div> (index.html) => content nằm trong đây hết (lấy context trong index.js nhở getElementById) ==> không cần đụng vào
+index.html
+
+index.js render app.js để hiện lên web
+
+
+
+
+
+
