@@ -45,6 +45,12 @@ function Employees () {
                 role: 'Senior',
                 img: 'https://images.pexels.com/photos/3748221/pexels-photo-3748221.jpeg?auto=compress&cs=tinysrgb&w=400'
             },
+            {
+                id: 7,
+                name: 'Karola ',
+                role: 'Senior',
+                img: 'https://images.pexels.com/photos/3748221/pexels-photo-3748221.jpeg?auto=compress&cs=tinysrgb&w=400'
+            },
 
         ]
     );
