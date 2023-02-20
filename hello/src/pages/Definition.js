@@ -1,12 +1,12 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link, json } from 'react-router-dom';
 import NotFound from '../components/NotFound';
 import DefinitionSearch from '../components/DefinitionSearch';
 
 
-export default function Definition () {
+export default function Definition ( props ) {
     const [word, setWord] = useState();
     const [notFound, setNotFound] = useState( false );
     const [error, setError] = useState( false );
