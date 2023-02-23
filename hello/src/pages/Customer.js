@@ -2,14 +2,24 @@ import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { baseUrl } from '../shared';
-import { NavigateBeforeRounded } from '@mui/icons-material';
 
 export default function Customer () {
     //variable in {} will grab the properties on object
     const { id } = useParams(); //useParams return an object but we only want the id so use {}
     const navigate = useNavigate();
     const [customer, setCustomer] = useState();
+    const [tempCustomer, setTempCustomer] = useState();
     const [notFound, setNotFound] = useState();
+    const [changed, setChanged] = useState( false );
+
+
+    useEffect( () => {
+        // console.log( 'customer', customer );
+        // console.log( 'customer', tempCustomer );
+        // console.log( changed );
+    } );
+
+
     useEffect( () => {
         const url = baseUrl + 'api/customers/' + id;
         fetch( url )
@@ -25,17 +35,71 @@ export default function Customer () {
             } )
             .then( ( data ) => {
                 setCustomer( data.customer );
+                setTempCustomer( data.customer );
             } );
     }, [] );
+
+    function updateCustomer () {
+        const url = baseUrl + 'api/customers/' + id;
+        fetch( url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify( tempCustomer )
+        } )
+            .then( ( response ) => {
+                return response.json();
+            } )
+            .then( ( data ) => {
+                setCustomer( data.customer );
+                setChanged( false );
+                console.log( data );
+            } )
+            .catch();
+    }
 
     return (
         <>
             {notFound ? <p>The customer with id {id} is not found</p> : null}
             {customer ?
                 <div>
-                    <p>{customer.id}</p>
-                    <p>{customer.name}</p>
-                    <p>{customer.industry}</p>
+                    {/* shown wanna show the id :3 */}
+                    {/* <p className='m-2 block px-2' type='text' >{tempCustomer.id}</p> */}
+                    <input
+                        className='m-2 block px-2'
+                        type='text'
+                        value={tempCustomer.name}
+                        onChange={( e ) => {
+                            setChanged( true );
+                            setTempCustomer( { ...tempCustomer, name: e.target.value } );
+                        }}
+                    />
+                    <input
+                        className='m-2 block px-2'
+                        type='text'
+                        value={tempCustomer.industry}
+                        onChange={( e ) => {
+                            setChanged( true );
+                            setTempCustomer( { ...tempCustomer, industry: e.target.value } );
+                        }}
+                    />
+                    {changed ?
+                        <>
+                            <button
+                                className=''
+                                onClick={( e ) => {
+                                    setTempCustomer( { ...customer } );
+                                    setChanged( false );
+                                }}
+                            >Cancel</button>
+                            {' '}
+                            <button
+                                className=''
+                                onClick={updateCustomer}
+                            >Save</button>
+                        </>
+                        : null}
                 </div>
                 : null}
             <button onClick={( e ) => {
