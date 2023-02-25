@@ -5,6 +5,15 @@ index.js render app.js để hiện lên web
 
 
 
+Setup a Django Backend - React (python environment setup for windows [Caleb curry])
 
+Download python on their website 
+Windows terminal => py --version
+		cd LEARN-REACT
+		mkdir backend 
+		py -m vent .venv
+		dir -a
+		.venv\Source\activate
 
-
+		python -m pip install Django
+		
