@@ -15,11 +15,7 @@ function classNames ( ...classes ) {
 }
 
 export default function Header ( props ) {
-    const [ loggedIn, setLoggedIn ] = useContext( LoginContext );
-
-    useEffect( () => {
-        console.log( loggedIn );
-    } );
+    const [loggedIn, setLoggedIn] = useContext( LoginContext );
 
     return (
         <>
@@ -31,19 +27,11 @@ export default function Header ( props ) {
                                 <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
                                     {/* Mobile menu button*/}
                                     <Disclosure.Button className='inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>
-                                        <span className='sr-only'>
-                                            Open main menu
-                                        </span>
+                                        <span className='sr-only'>Open main menu</span>
                                         {open ? (
-                                            <XMarkIcon
-                                                className='block h-6 w-6'
-                                                aria-hidden='true'
-                                            />
+                                            <XMarkIcon className='block h-6 w-6' aria-hidden='true' />
                                         ) : (
-                                            <Bars3Icon
-                                                className='block h-6 w-6'
-                                                aria-hidden='true'
-                                            />
+                                            <Bars3Icon className='block h-6 w-6' aria-hidden='true' />
                                         )}
                                     </Disclosure.Button>
                                 </div>
@@ -54,14 +42,8 @@ export default function Header ( props ) {
                                                 <NavLink
                                                     key={item.name}
                                                     to={item.href}
-                                                    className={( {
-                                                        isActive,
-                                                    } ) => {
-                                                        console.log(
-                                                            item.href +
-                                                            ' ' +
-                                                            isActive
-                                                        );
+                                                    className={( { isActive } ) => {
+                                                        console.log( item.href + ' ' + isActive );
                                                         return (
                                                             'px-3 py-2 rounded-md text-sm font-medium no-underline ' +
                                                             ( !isActive
@@ -74,16 +56,25 @@ export default function Header ( props ) {
                                                 </NavLink>
                                             ) )}
 
-                                            <NavLink
-                                                to={
-                                                    loggedIn
-                                                        ? '/logout'
-                                                        : '/login'
-                                                }
-                                                className='px-3 py-2 rounded-md text-sm font-medium no-underline text-gray-300 hover:bg-gray-700 hover:text-white'
-                                            >
-                                                {loggedIn ? 'Logout' : 'Login'}
-                                            </NavLink>
+                                            {loggedIn ? (
+                                                <NavLink
+                                                    to={'/login'}
+                                                    onClick={() => {
+                                                        setLoggedIn( false );
+                                                        localStorage.clear();
+                                                    }}
+                                                    className='px-3 py-2 rounded-md text-sm font-medium no-underline text-gray-300 hover:bg-gray-700 hover:text-white'
+                                                >
+                                                    Logout
+                                                </NavLink>
+                                            ) : (
+                                                <NavLink
+                                                    to={'/login'}
+                                                    className='px-3 py-2 rounded-md text-sm font-medium no-underline text-gray-300 hover:bg-gray-700 hover:text-white'
+                                                >
+                                                    Login
+                                                </NavLink>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -92,13 +83,8 @@ export default function Header ( props ) {
                                         type='button'
                                         className='rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
                                     >
-                                        <span className='sr-only'>
-                                            View notifications
-                                        </span>
-                                        <BellIcon
-                                            className='h-6 w-6'
-                                            aria-hidden='true'
-                                        />
+                                        <span className='sr-only'>View notifications</span>
+                                        <BellIcon className='h-6 w-6' aria-hidden='true' />
                                     </button>
                                 </div>
                             </div>
@@ -111,9 +97,7 @@ export default function Header ( props ) {
                                         key={item.name}
                                         to={item.href}
                                         className={( { isActive } ) => {
-                                            console.log(
-                                                item.href + ' ' + isActive
-                                            );
+                                            console.log( item.href + ' ' + isActive );
                                             return (
                                                 'block px-3 py-2 rounded-md text-base font-medium no-underline ' +
                                                 ( !isActive
@@ -125,16 +109,27 @@ export default function Header ( props ) {
                                         {item.name}
                                     </NavLink>
                                 ) )}
-                                <NavLink
-                                    to={
-                                        loggedIn
-                                            ? '/logout'
-                                            : '/login'
-                                    }
-                                    className='block px-3 py-2 rounded-md text-base font-medium no-underline text-gray-300 hover:bg-gray-700 hover:text-white'
-                                >
-                                    {loggedIn ? 'Logout' : 'Login'}
-                                </NavLink>
+
+                                {loggedIn ? (
+                                    <NavLink
+                                        to={'/login'}
+                                        onClick={() => {
+                                            setLoggedIn( false );
+                                            localStorage.clear();
+                                        }}
+                                        className='block px-3 py-2 rounded-md text-base font-medium no-underline text-gray-300 hover:bg-gray-700 hover:text-white'
+                                    >
+                                        Logout
+                                    </NavLink>
+                                ) : (
+                                    <NavLink
+                                        to={'/login'}
+                                        className='block px-3 py-2 rounded-md text-base font-medium no-underline text-gray-300 hover:bg-gray-700 hover:text-white'
+                                    >
+                                        Login
+                                    </NavLink>
+                                )}
+
                             </div>
                         </Disclosure.Panel>
                     </>

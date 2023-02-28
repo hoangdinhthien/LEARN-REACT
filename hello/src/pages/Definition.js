@@ -1,67 +1,45 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useParams, useNavigate, Link, json, useLocation } from 'react-router-dom';
+import {
+    useParams,
+    useNavigate,
+    Link,
+    json,
+    useLocation,
+} from 'react-router-dom';
 import NotFound from '../components/NotFound';
 import DefinitionSearch from '../components/DefinitionSearch';
+import useFetch from '../hooks/UseFetch';
 
 
 export default function Definition ( props ) {
-    const [ word, setWord ] = useState();
-    const [ notFound, setNotFound ] = useState( false );
-    const [ error, setError ] = useState( false );
+    // const [ word, setWord ] = useState();
+    // const [notFound, setNotFound] = useState( false );
+    // const [error, setError] = useState( false );
 
     let { search } = useParams();
 
-    const navigate = useNavigate();
     const location = useLocation();
+    const navigate = useNavigate();
+    const [word, errorStatus] = useFetch(
+        'https://api.dictionaryapi.dev/api/v2/entries/en/' + search
+    );
 
-    useEffect( () => {
-        // const url = 'https://asjdfhsalkfjaslkfjsaldkjfsadfsdfklsdjf.com';
-        // const url = 'https://httpstat.us/501';
-        const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/' + search;
-        fetch( url )
-            .then( ( response ) => {
-                // console.log( response.status );
-                if ( response.status === 404 ) {
-                    setNotFound( true );
-                } else if ( response.status === 401 ) {
-
-                } else if ( response.status === 500 ) {
-                    setError( true );
-                }
-
-                if ( !response.ok ) {
-                    setError( true );
-
-                    throw new Error( 'Something went wrong' );
-                }
-                return response.json();
-            } )
-            .then( ( data ) => {
-                setWord( data[ 0 ].meanings );
-                console.log( data[ 0 ].meanings );
-            } )
-            .catch( ( e ) => {
-                console.log( e.message );
-            } );
-    }, [] );
-
-
-    if ( notFound === true ) {
+    if ( errorStatus === 404 ) {
         return (
             <>
                 <NotFound />
-                <Link to='/dictionary' >Search another</Link>
+                <Link to='/dictionary'>Search another</Link>
             </>
         );
     }
 
-    if ( error === true ) {
+    if ( errorStatus ) {
         return (
             <>
-                <p>Something went wrong, try again?</p>
-                <Link to='/dictionary' >Search another</Link>
+                <p>There was a problem with the server, try again later!</p>
+                <Link to='/dictionary'>Search another</Link>
             </>
         );
     }
@@ -71,21 +49,21 @@ export default function Definition ( props ) {
             {/* if word is defined => return the meaning with the key(uuid)
             else return null
             */}
-            {word ?
+            {word?.[0]?.meanings ? (
                 <>
                     <h1>Here is a definition:</h1>
-                    {word.map( ( meaning ) => {
+                    {word[0].meanings.map( ( meaning ) => {
                         return (
                             <p key={uuidv4()}>
                                 {meaning.partOfSpeech + ': '}
-                                {meaning.definitions[ 0 ].definition}
+                                {meaning.definitions[0].definition}
                             </p>
                         );
                     } )}
                     <p>Search again:</p>
                     <DefinitionSearch></DefinitionSearch>
                 </>
-                : null}
+            ) : null}
         </>
     );
 }
