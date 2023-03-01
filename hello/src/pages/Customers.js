@@ -20,6 +20,8 @@ export default function Customers () {
 
     const url = baseUrl + 'api/customers/';
     const {
+        request,
+        appendData,
         data: { customers } = {},
         errorStatus,
     } = useFetch( url, {
@@ -31,60 +33,21 @@ export default function Customers () {
     } );
 
     useEffect( () => {
-        console.log( customers, errorStatus );
-    } );
+        request();
+    }, [] );
 
     // useEffect( () => {
-    //     const url = baseUrl + 'api/customers/';
-    //     fetch( url, {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             Authorization: 'Bearer ' + localStorage.getItem( 'access' )
-    //         },
-    //     } )
-    //         .then( ( response ) => {
-    //             if ( response.status === 401 ) {
-    //                 setLoggedIn( false );
-    //                 navigate( '/login', {
-    //                     state: {
-    //                         previousUrl: location.pathname,
-    //                     }
-    //                 } );
-    //             }
-    //             return response.json();
-    //         } )
-    //         .then( ( data ) => {
-    //             setCustomers( data.customers );
-    //         } );
-    // }, [] );
+    //     console.log( request, appendData, customers, errorStatus );
+    // } );
+
+
 
     function newCustomer ( name, industry ) {
-        //     const data = { name: name, industry: industry };
-        //     const url = baseUrl + 'api/customers/';
-        //     fetch( url, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify( data ),
-        //     } )
-        //         .then( ( response ) => {
-        //             if ( !response.ok ) {
-        //                 throw new Error( 'Something went wrong!' );
-        //             }
-        //             return response.json();
-        //         } )
-        //         .then( ( data ) => {
-        //             toggleShow();
-        //             console.log( data );
-        //             setCustomers( [...customers, data.customer] );
-        //             //assume the add was successful
-        //             //hide the modal
-        //             //make sure the list is updated appropriately
-        //         } )
-        //         .catch( ( e ) => {
-        //             console.log( e );
-        //         } );
+        appendData( { name: name, industry: industry } );
+
+        if ( !errorStatus ) {
+            toggleShow();
+        }
     }
 
     return (

@@ -12,7 +12,6 @@ import NotFound from '../components/NotFound';
 import DefinitionSearch from '../components/DefinitionSearch';
 import useFetch from '../hooks/UseFetch';
 
-
 export default function Definition ( props ) {
     // const [ word, setWord ] = useState();
     // const [notFound, setNotFound] = useState( false );
@@ -22,9 +21,17 @@ export default function Definition ( props ) {
 
     const location = useLocation();
     const navigate = useNavigate();
-    const [word, errorStatus] = useFetch(
-        'https://api.dictionaryapi.dev/api/v2/entries/en/' + search
-    );
+    const {
+        request,
+        data: [{ meanings: word }] = [{}],
+        errorStatus,
+    } = useFetch( 'https://api.dictionaryapi.dev/api/v2/entries/en/' + search, {
+        method: 'GET',
+    } );
+
+    useEffect( () => {
+        request();
+    } );
 
     if ( errorStatus === 404 ) {
         return (
@@ -49,10 +56,10 @@ export default function Definition ( props ) {
             {/* if word is defined => return the meaning with the key(uuid)
             else return null
             */}
-            {word?.[0]?.meanings ? (
+            {word ? (
                 <>
                     <h1>Here is a definition:</h1>
-                    {word[0].meanings.map( ( meaning ) => {
+                    {word.map( ( meaning ) => {
                         return (
                             <p key={uuidv4()}>
                                 {meaning.partOfSpeech + ': '}
