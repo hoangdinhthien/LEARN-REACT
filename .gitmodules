@@ -4,3 +4,6 @@
 [submodule "ts-axios"]
 	path = ts-axios
 	url = https://github.com/hoangdinhthien/ts-axios
+[submodule "ts-axios-cryptocurrencies-"]
+	path = ts-axios-cryptocurrencies-
+	url = https://github.com/hoangdinhthien/ts-axios-cryptocurrencies-
