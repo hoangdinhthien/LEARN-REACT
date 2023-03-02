@@ -17,3 +17,10 @@ Windows terminal => py --version
 
 		python -m pip install Django
 		
+
+
+
+TYPESCRIPT:
+	similar to javascript but it adds static typing --> our variables are going to have types 
+										this will help run time error during the execution of the software
+										by moving those errors to compile time errors

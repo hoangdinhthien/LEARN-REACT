@@ -1,0 +1,3 @@
+[submodule "react-backend-django"]
+	path = react-backend-django
+	url = https://github.com/hoangdinhthien/react-backend-django
