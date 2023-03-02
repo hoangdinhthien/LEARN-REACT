@@ -1,3 +1,6 @@
 [submodule "react-backend-django"]
 	path = react-backend-django
 	url = https://github.com/hoangdinhthien/react-backend-django
+[submodule "ts-axios"]
+	path = ts-axios
+	url = https://github.com/hoangdinhthien/ts-axios
