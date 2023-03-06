@@ -7,3 +7,6 @@
 [submodule "ts-axios-cryptocurrencies-"]
 	path = ts-axios-cryptocurrencies-
 	url = https://github.com/hoangdinhthien/ts-axios-cryptocurrencies-
+[submodule "react-graphql"]
+	path = react-graphql
+	url = https://github.com/hoangdinhthien/react-graphql.git
