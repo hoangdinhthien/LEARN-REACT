@@ -10,3 +10,6 @@
 [submodule "react-graphql"]
 	path = react-graphql
 	url = https://github.com/hoangdinhthien/react-graphql.git
+[submodule "react-next"]
+	path = react-next
+	url = https://github.com/hoangdinhthien/react-next
